@@ -6,26 +6,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_role")
-public class Role  implements Serializable {
+@Table(name="tb_routine")
+public class Routine  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String name;
 	private String authority;
-	private String description;
+	@ManyToOne
+	@JoinColumn(name="menu_id")
+	private Menu menu;
 	
-	public Role() {
+	public Routine() {
 	}
 
-	public Role(Long id, String authority, String description) {
+	public Routine(Long id, String name, String authority, Menu menu) {
 		this.id = id;
+		this.name = name;
 		this.authority = authority;
-		this.description = description;
+		this.menu = menu;
 	}
 
 	public Long getId() {
@@ -36,6 +42,14 @@ public class Role  implements Serializable {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getAuthority() {
 		return authority;
 	}
@@ -44,12 +58,12 @@ public class Role  implements Serializable {
 		this.authority = authority;
 	}
 
-	public String getDescription() {
-		return description;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	@Override
@@ -68,7 +82,7 @@ public class Role  implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Role other = (Role) obj;
+		Routine other = (Routine) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -76,8 +90,7 @@ public class Role  implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 	
 }
 

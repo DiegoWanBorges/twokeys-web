@@ -19,4 +19,6 @@ public class SwaggerConfig {
 				.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any())
 				.build();
 	}
+	
+	
 }

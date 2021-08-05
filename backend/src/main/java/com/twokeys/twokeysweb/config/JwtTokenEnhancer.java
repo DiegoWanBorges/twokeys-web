@@ -30,5 +30,6 @@ public class JwtTokenEnhancer implements TokenEnhancer {
 		token.setAdditionalInformation(map);
 		return accessToken;
 	}
+	
 
 }

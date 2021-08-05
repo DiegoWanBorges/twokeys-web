@@ -21,13 +21,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.twokeys.twokeysweb.dto.RoleDTO;
+import com.twokeys.twokeysweb.dto.RoutineDTO;
 import com.twokeys.twokeysweb.dto.UserDTO;
 import com.twokeys.twokeysweb.dto.UserInsertDTO;
 import com.twokeys.twokeysweb.dto.UserUpdateDTO;
-import com.twokeys.twokeysweb.entities.Role;
+import com.twokeys.twokeysweb.entities.Routine;
 import com.twokeys.twokeysweb.entities.User;
-import com.twokeys.twokeysweb.repositories.RoleRepository;
+import com.twokeys.twokeysweb.repositories.RoutineRepository;
 import com.twokeys.twokeysweb.repositories.UserRepository;
 import com.twokeys.twokeysweb.services.exceptions.DatabaseException;
 import com.twokeys.twokeysweb.services.exceptions.ResourceNotFoundException;
@@ -42,12 +42,13 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoutineRepository roleRepository;
 
 	@Transactional(readOnly = true)
 	public List<UserDTO> findByName(String name) {
 		String nome =SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info(nome);
+		
 		String nameConcat = "%" + name + "%";
 		List<User> list = repository.findByNameLikeIgnoreCase(nameConcat);
 		return list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
@@ -104,10 +105,10 @@ public class UserService implements UserDetailsService {
 	private void copyDtoToEntity(UserDTO dto, User user) {
 		user.setName(dto.getName());
 		user.setEmail(dto.getEmail());
-		user.getRoles().clear();
-		for (RoleDTO rolDTO : dto.getRoles()) {
-			Role role = roleRepository.getById(rolDTO.getId());
-			user.getRoles().add(role);
+		user.getRoutines().clear();
+		for (RoutineDTO rolDTO : dto.getRoutines()) {
+			Routine role = roleRepository.getById(rolDTO.getId());
+			user.getRoutines().add(role);
 		}
 	}
 

@@ -42,11 +42,11 @@ public class User  implements UserDetails,  Serializable {
 	private Company company;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="tb_user_role", 
+	@JoinTable(name="tb_routine_access", 
 			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="role_id")
+			inverseJoinColumns = @JoinColumn(name="routine_id")
 			)
-	private Set<Role> roles = new HashSet<>();
+	private Set<Routine> routines = new HashSet<>();
 	
 	
 	
@@ -107,10 +107,10 @@ public class User  implements UserDetails,  Serializable {
 		this.company = company;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public Set<Routine> getRoutines() {
+		return routines;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -138,7 +138,7 @@ public class User  implements UserDetails,  Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-	  return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+	  return routines.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
 				   .collect(Collectors.toList());
 	}
 

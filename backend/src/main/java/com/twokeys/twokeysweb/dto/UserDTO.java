@@ -22,20 +22,20 @@ public class UserDTO implements Serializable {
 	
 	private CompanyDTO company;
 	
-	private List<RoleDTO> roles = new ArrayList<>();
+	private List<RoutineDTO> routines = new ArrayList<>();
 	
 	public UserDTO() {
 		
 	}
 		
 	public UserDTO(Long id, @NotBlank(message = "Campo nome obrigatorio") String name,
-				   String email,CompanyDTO company, List<RoleDTO> roles) {
+				   String email,CompanyDTO company, List<RoutineDTO> roles) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.company = company;
-		this.roles = roles;
+		this.routines = roles;
 		
 	}
 
@@ -45,7 +45,7 @@ public class UserDTO implements Serializable {
 		this.name = entity.getName();
 		this.email = entity.getEmail();
 		this.company = new CompanyDTO(entity.getCompany());
-		entity.getRoles().forEach(rol -> this.roles.add(new RoleDTO(rol)));
+		entity.getRoutines().forEach(rol -> this.routines.add(new RoutineDTO(rol)));
 	}
 
 	public Long getId() {
@@ -80,8 +80,7 @@ public class UserDTO implements Serializable {
 		this.company = company;
 	}
 
-	public List<RoleDTO> getRoles() {
-		return roles;
+	public List<RoutineDTO> getRoutines() {
+		return routines;
 	}
-		
 }
